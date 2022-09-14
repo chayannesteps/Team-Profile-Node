@@ -1,33 +1,94 @@
 const inquirer = require('inquirer');
 const path = require('path');
 const fs = require('fs');
-const generateMarkdown = require('./src/generateMarkdown');
-const { choices } = require('yargs');
-const teamMembers = ['Team Manager', 'Engineer', 'Intern', 'I dont want to add a team member']
-// const questions = require('./questions')
-// console.log(questions)
+const teamMembers = [];
+const Manager = require('./lib/manager');
+const Engineer = require('./lib/engineer');
+const Intern = require('./lib/intern');
+const DES_DIR = path.resolve(__dirname, 'design');
+const desPath = path.join(DES_DIR, 'team.html');
+const render = require('./src/page-template');
+const idArr = [];
 
+console.log('\n Welcome to the Team Generator\n Use NPM Run Reset to reset the design folder')
+
+function appMenu() {
+    function createManager() {
+        console.log('Start building your team')
+        inquirer.prompt([
+            {
+                type: 'input',
+                name: 'tmName',
+                message: 'What is the team managers name?',
+                validate: (answer) => {
+                    if (answer !== '') {
+                        return true
+                    }
+                    return 'Please enter at least one character'
+                }
+            },
+            {
+                type: 'input',
+                name: 'tmId',
+                message: 'What is the team managers id?',
+                validate: (answer) => {
+                    const ok = answer.match(/^[1-9]\d*$/);
+                    if (ok) {
+                        return true
+                    }
+                    return 'Please enter positive number greater than zero'
+                }
+            },
+            {
+                type: 'input',
+                name: 'tmEmail',
+                message: 'What is the team managers email address?',
+                validate: (answer) => {
+                    const ok = answer.match(/\S+@\S+\.\S+/);
+                    if (ok) {
+                        return true
+                    }
+                    return 'Please enter a valid email address'
+                }
+            },
+            {
+                type: 'input',
+                name: 'tmOffice',
+                message: 'What is the team managers office number?',
+                validate: (answer) => {
+                    const ok = answer.match(/^[1-9]\d*$/);
+                    if (ok) {
+                        return true
+                    }
+                    return 'Please enter positive number greater than zero'
+                }
+            },
+        ])
+        .then((answers) => {
+            const manager = new Manager (
+                answers.tmName, 
+                answers.tmId,
+                answers.tmEmail,
+                answers.tmOffice
+            );
+            teamMembers.push(manager);
+            idArr.push(answers.tmId);
+            createTeam();
+        });
+    }
+    function createTeam() {
+        inquirer.prompt ()
+        .then((userChoice) => {
+            switch(userChoice.type) {
+                case 'Engineer': 
+                addEngineer();
+                break;
+            }
+        })
+    }
+}
 const tmQuestions = [
-    {
-    type: 'input',
-    name: 'tmName',
-    message: 'What is the team managers name?'
-    },
-    {
-        type: 'input',
-        name: 'tmId',
-        message: 'What is the team managers id?'
-    },
-    {
-        type: 'input',
-        name: 'tmEmail',
-        message: 'What is the team managers email address?'
-    },
-    {
-        type: 'input',
-        name: 'tmOffice',
-        message: 'What is the team managers office number?'
-    },
+
     {
         type: 'list',
         name: 'type',
