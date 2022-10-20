@@ -5,7 +5,7 @@ const generateManager = function (manager) {
         <div class="card h-100">
             <div class="card-header">
                 <h3>${manager.name}</h3>
-                <h4>Manager</h4><i class="material-icons">content_paste</i>
+                <h4>Manager</h4>
             </div>
             <div class="card-body">
                 <p class="id">ID: ${manager.id}</p>
@@ -24,7 +24,7 @@ const generateEngineer = function (engineer) {
         <div class="card h-100">
             <div class="card-header">
                 <h3>${engineer.name}</h3>
-                <h4>Engineer</h4><i class="material-icons">laptop_mac</i>
+                <h4>Engineer</h4>
             </div>
             <div class="card-body">
                 <p class="id">ID: ${engineer.id}</p>
@@ -43,7 +43,7 @@ const generateIntern = function (intern) {
         <div class="card h-100">
             <div class="card-header">
                 <h3>${intern.name}</h3>
-                <h4>Intern</h4><i class="material-icons">assignment_ind</i>
+                <h4>Intern</h4>
             </div>
             <div class="card-body">
                 <p class="id">ID: ${intern.id}</p>
@@ -98,7 +98,7 @@ generateHTML = (data) => {
 
 }
 
-// generateing html page 
+// generating html 
 const generateTeamPage = function (employeeCards) {   
   return`
   <!DOCTYPE html>
@@ -122,7 +122,6 @@ const generateTeamPage = function (employeeCards) {
       <main>
           <div class="container">
               <div class="row justify-content-center" id="team-cards">
-                  <!--Team Cards-->
                   ${employeeCards}
               </div>
           </div>
