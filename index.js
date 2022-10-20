@@ -156,7 +156,7 @@ const tmQuestions = [
         
     // inquirer.prompt(tmQuestions)
     //     .then(function(answers){
-    //         // console.log(answers)
+    //         console.log(answers)
     // })
     // inquirer.prompt(enQuestions)
     //     .then(function(answers){
